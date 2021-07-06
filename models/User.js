@@ -12,7 +12,7 @@ User.init(
     id:{
         // use the special sequelize dataTypes object provide What type of data it is
         type: DataTypes.INTEGER,
-        //equivalant to sqls NOT NULL option
+        //equivalent to mysql's NOT NULL option
         allowNull: false,
         //instruct that this is primary key
         primaryKey: true,
@@ -40,7 +40,7 @@ User.init(
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            //this means the password must be at least four charecters long
+            //this means the password must be at least four characters long
             len: [4]
         }
     }
