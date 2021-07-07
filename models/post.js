@@ -24,7 +24,7 @@ Post.init(
                 isUrl: true
             }
         },
-        user_url: {
+        user_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'user',
