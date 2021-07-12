@@ -3,7 +3,7 @@ const sequelize = require('../../config/connection');
 const { Post, User, Comment, Vote } = require('../../models');
 
 // get all users
-router.get('/', (req, res) => {
+router.get('/', (request, response) => {
   console.log('======================');
   Post.findAll({
     attributes: [
@@ -29,14 +29,14 @@ router.get('/', (req, res) => {
       }
     ]
   })
-    .then(dbPostData => res.json(dbPostData))
+    .then(dbPostData => response.json(dbPostData))
     .catch(err => {
       console.log(err);
-      res.status(500).json(err);
+      response.status(500).json(err);
     });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', (request, response) => {
   Post.findOne({
     where: {
       id: req.params.id
@@ -65,81 +65,81 @@ router.get('/:id', (req, res) => {
   })
     .then(dbPostData => {
       if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
+        response.status(404).json({ message: 'No post found with this id' });
         return;
       }
-      res.json(dbPostData);
+      response.json(dbPostData);
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json(err);
+      response.status(500).json(err);
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/', (request, response) => {
   // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
   Post.create({
-    title: req.body.title,
-    post_url: req.body.post_url,
-    user_id: req.body.user_id
+    title: request.body.title,
+    post_url: request.body.post_url,
+    user_id: request.body.user_id
   })
-    .then(dbPostData => res.json(dbPostData))
+    .then(dbPostData => response.json(dbPostData))
     .catch(err => {
       console.log(err);
-      res.status(500).json(err);
+      response.status(500).json(err);
     });
 });
 
-router.put('/upvote', (req, res) => {
+router.put('/upvote', (request, response) => {
   // custom static method created in models/Post.js
-  Post.upvote(req.body, { Vote, Comment, User })
-    .then(updatedVoteData => res.json(updatedVoteData))
+  Post.upvote(request.body, { Vote, Comment, User })
+    .then(updatedVoteData => response.json(updatedVoteData))
     .catch(err => {
       console.log(err);
-      res.status(500).json(err);
+      response.status(500).json(err);
     });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', (request, response) => {
   Post.update(
     {
-      title: req.body.title
+      title: request.body.title
     },
     {
       where: {
-        id: req.params.id
+        id: request.params.id
       }
     }
   )
     .then(dbPostData => {
       if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
+        response.status(404).json({ message: 'No post found with this id' });
         return;
       }
-      res.json(dbPostData);
+      response.json(dbPostData);
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json(err);
+      response.status(500).json(err);
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (request, response) => {
   Post.destroy({
     where: {
-      id: req.params.id
+      id: request.params.id
     }
   })
     .then(dbPostData => {
       if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
+        response.status(404).json({ message: 'No post found with this id' });
         return;
       }
-      res.json(dbPostData);
+      response.json(dbPostData);
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json(err);
+      response.status(500).json(err);
     });
 });
 
