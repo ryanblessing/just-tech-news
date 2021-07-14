@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { response } = require('express');
 const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
 
@@ -31,12 +32,16 @@ router.get('/', (request, response) => {
             //this const will loop over and map each sequwlize object into a serialized version
             const posts = dbPostData.map(post => post.get({ plain: true }));
             // pass a single post object into the homepage template
-            res.render('homepage', { posts });
+            response.render('homepage', { posts });
         })
         .catch(err => {
             console.log(err);
             response.status(500).json(err);
         });
+});
+
+router.get('/', (request, response) => {
+    response.render('login');
 });
 
 module.exports = router;
