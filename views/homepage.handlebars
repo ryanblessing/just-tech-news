@@ -1,19 +1,8 @@
 <ol class="post-list">
     {{#each posts as |post|}}
   <li>
-    <article class="post">
-      <div class="title">
-          <!--  double curly brackets are how to get the handlebars syntax imbedded into the html-->
-        <a href="{{post.post_url}}" target="_blank">{{post.title}}</a>
-        <span>({{post.post_url}})</span>
-      </div>
-      <div class="meta">
-        {{post.vote_count}} point(s) by {{post.user.username}} on
-        {{post.created_at}}
-        |
-        <a href="/post/{{post.id}}">{{post.comments.length}} comment(s)</a>
-      </div>
-    </article>
+    <!--14.4.3 partials...need a > character to use ans connect to post-info page in partials folder?-->
+  {{>post-info post }}
   </li>
   {{/each}}
 </ol>
